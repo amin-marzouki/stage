@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 
 use Illuminate\Support\Facades\Hash;
+
+
+class usercontroller extends Controller
+{
+    //
+
 /**
  * @OA\Post(
  * path="login",
@@ -21,7 +27,7 @@ use Illuminate\Support\Facades\Hash;
  *       required={"email","password"},
  *       @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
  *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
- *       @OA\Property(property="persistent", type="boolean", example="true"),
+ *      
  *    ),
  * ),
  * @OA\Response(
@@ -30,21 +36,17 @@ use Illuminate\Support\Facades\Hash;
  *    @OA\JsonContent(
  *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
  *        )
- *     )
+ *     
  * ),
  *  @OA\Response(
- *    response=1,
+ *    response=205,
  *    description="succes",
- *   
- *     
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="succes")
+ *        )
+ *   )   
  * )
  */
-
-class usercontroller extends Controller
-{
-    //
-
-
 
     function index(Request $request)
     {
@@ -65,6 +67,43 @@ class usercontroller extends Controller
         
              return response($response, 201);
     }
+    
+/**
+ * @OA\Post(
+ * path="register",
+ * summary="Sign up",
+ * description="register by name ,email, password",
+ * operationId="authregister",
+ * tags={"auth"},
+ * @OA\RequestBody(
+ *    required=true,
+ *    description="Pass user credentials",
+ *    @OA\JsonContent(
+ *       required={"email","password","name"},
+ *       @OA\Property(property="name", type="string", format="text", example="user"),
+ *       @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+ *       @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+ *      
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=423,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email  or password format. Please try again")
+ *        )
+ *     
+ * ),
+ * @OA\Response(
+ *    response=206,
+ *    description="Wrong credentials response",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="succes")
+ *        )
+ *     )
+ * 
+ *)
+ */
     public function register(Request $request)
     {
         
@@ -84,7 +123,7 @@ $token =$user->createToken('API Token')->plainTextToken;
             'token' => $token
         ];
     }
-    public function logout(Request $request)
+  /*  public function logout(Request $request)
     {
         return 'hi';
         $user = request()->user();
@@ -93,5 +132,5 @@ $token =$user->createToken('API Token')->plainTextToken;
         return [
             'message' => 'Tokens Revoked'
         ];
-    }
+    }*/
 }
