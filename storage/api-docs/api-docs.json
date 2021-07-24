@@ -1,0 +1,393 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "club priviligie",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/show/{id}": {
+            "get": {
+                "tags": [
+                    "promotion"
+                ],
+                "summary": "Get promtion information",
+                "description": "Returns promotion data",
+                "operationId": "getPromotionById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "promtion id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Promotion"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/add": {
+            "post": {
+                "tags": [
+                    "promotion"
+                ],
+                "summary": "Store new promotion",
+                "description": "Returns promotion data",
+                "operationId": "addpromotion",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StorePromotionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Promotion"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/update/{id}": {
+            "put": {
+                "tags": [
+                    "promotion"
+                ],
+                "summary": "Update existing promotion",
+                "description": "Returns updated promotion data",
+                "operationId": "updatepromotion",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "promotion id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StorePromotionRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Promotion"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/add/{id}": {
+            "delete": {
+                "tags": [
+                    "promotion"
+                ],
+                "summary": "Delete existing promotion",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deletepromotion",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "promotion id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Sign in",
+                "description": "Login by email, password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    },
+                                    "persistent": {
+                                        "type": "boolean",
+                                        "example": "true"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "promotion": {
+                "title": "promotion",
+                "description": "promotion model",
+                "xml": {
+                    "name": "promotion"
+                }
+            },
+            "Promotion": {
+                "title": "promotion",
+                "description": "promotion model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "Name",
+                        "description": "Name of the new project",
+                        "type": "string",
+                        "example": "A nice project"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the new project",
+                        "type": "string",
+                        "example": "This is new project's description"
+                    },
+                    "type": {
+                        "title": "Description",
+                        "description": "Description of the new project",
+                        "type": "string",
+                        "example": "This is new project's description"
+                    },
+                    "partenaire": {
+                        "title": "Description",
+                        "description": "Description of the new project",
+                        "type": "string",
+                        "example": "This is new project's description"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "promotion"
+                }
+            },
+            "PromotionResource": {
+                "title": "PromotionResource",
+                "description": "Promotion resource",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "ref": null
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "PromotionResource"
+                }
+            },
+            "StorePromotionRequest": {
+                "title": "Store promotion request",
+                "description": "Store promotion request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "Name",
+                        "description": "Name of the new promotion",
+                        "type": "string",
+                        "example": "new promotion"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the new promotion",
+                        "type": "string",
+                        "example": "This is new promotion's description"
+                    },
+                    "type": {
+                        "title": "Description",
+                        "description": "Description of the new promotion",
+                        "type": "string",
+                        "example": "percent "
+                    },
+                    "partenaire": {
+                        "title": "Description",
+                        "description": "Description of the new promotion",
+                        "type": "string",
+                        "example": "This is new promotion's description"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "1": {
+                "description": "succes"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
