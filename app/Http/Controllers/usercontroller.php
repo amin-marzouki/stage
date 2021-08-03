@@ -65,7 +65,8 @@ class usercontroller extends Controller
                 'token' => $token
             ];
         
-             return response($response, 201);
+             //return response($response, 201);
+             return $token;
     }
     
 /**
@@ -110,7 +111,7 @@ class usercontroller extends Controller
         $attr = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6'
         ]);
        
         $user = User::create([
@@ -119,9 +120,10 @@ class usercontroller extends Controller
             'email' => $attr['email']
         ]);
 $token =$user->createToken('API Token')->plainTextToken;
-        return[
+return $token;
+     /*   return[
             'token' => $token
-        ];
+        ];*/
     }
   /*  public function logout(Request $request)
     {

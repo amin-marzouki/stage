@@ -26,12 +26,14 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     //All secure URL's
    
    
-    });
-    Route::post("login",[usercontroller::class,'index']);
-    Route::post('register', [usercontroller::class, 'register']);
-   
-    Route::get("show/{id?}",[promotionController::class,'show']);
     Route::post("add",[promotionController::class,'add']);
     Route::put("update",[promotionController::class,'update']);
     Route::get("search",[promotionController::class,'search']);
     Route::delete("delete/{id}",[promotionController::class,'delete']);
+  Route::get("show/{id?}",[promotionController::class,'list']);
+    Route::get("user",fn()=>'msggggggggggggg');
+    });
+    Route::post("login",[usercontroller::class,'index']);
+    Route::post('register', [usercontroller::class, 'register']);
+    
+   //Route::get("show",fn()=>'msggggggggggggg');

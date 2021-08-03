@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\promotion;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 class promotionController extends Controller
 {
      /**
@@ -44,6 +44,8 @@ class promotionController extends Controller
      * )
      */
     function list($id=null){
+        
+        Log::info(json_encode($id?promotion::find($id):promotion::all()));
         return $id?promotion::find($id):promotion::all();
          
     }
